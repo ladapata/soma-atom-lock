@@ -49,8 +49,8 @@ temp = soma;
   }
 
 /* apenas para garantir que o programa sempre termine de executar quando a thread EXTRA termina antes das outras */
-  is_finished = 0;
-  pthread_cond_broadcast(&cond);
+is_finished = 0;
+pthread_cond_broadcast(&cond);
 /* apenas para garantir que o programa sempre termine de executar quando a thread EXTRA termina antes das outras */
 
   printf("Extra : terminou!\n");
