@@ -35,10 +35,10 @@ void* extra (void* args) {
     pthread_mutex_lock(&mutex);
     if (!(soma % 1000)){
       
-/*apenas para evitar de imprimir multiplos iguais*/
+/* apenas para evitar de imprimir multiplos iguais */
 if(!(temp^soma)){pthread_cond_broadcast(&cond); pthread_mutex_unlock(&mutex); continue;}
 temp = soma;
-/*apenas para evitar de imprimir multiplos iguais*/
+/* apenas para evitar de imprimir multiplos iguais */
 
       printf("soma = %ld \n", temp);
 
