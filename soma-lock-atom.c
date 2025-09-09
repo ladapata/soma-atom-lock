@@ -85,7 +85,8 @@ int main(int argc, char *argv[]) {
   } 
 
   pthread_mutex_destroy(&mutex);
-  pthread_cond_destroy(&cond);
+
+  pthread_cond_destroy(&cond); /* libera cond para finalizar sem vazamento de memoria */
    
   printf("Valor de 'soma' = %ld\n", soma);
 
