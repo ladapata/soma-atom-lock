@@ -16,10 +16,7 @@ void* ExecutaTarefa (void* args) {
   for (int i=0; i<10000; i++) {
     pthread_mutex_lock(&mutex);
 
-    if(is_finished)
-    {
-      if(!(soma%1000)) pthread_cond_wait(&cond, &mutex); /* condicao de bloqueio */
-    }
+    if(!(soma%1000) && is_finished) pthread_cond_wait(&cond, &mutex); /* condicao de bloqueio */
 
     soma++;
     pthread_mutex_unlock(&mutex);
