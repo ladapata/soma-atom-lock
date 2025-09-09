@@ -7,13 +7,14 @@ pthread_mutex_t mutex;
 
 pthread_cond_t cond; /* variavel de cond para bloqueio condicional*/
 
+int max_iter = 100000;
 short int is_finished = 1;
 
 void* ExecutaTarefa (void* args) {
   long int id = (long int) args;
   printf("Thread : %ld esta executando...\n", id);
 
-  for (int i=0; i<10000; i++) {
+  for (int i=0; i<max_iter; i++) {
     pthread_mutex_lock(&mutex);
 
     if(!(soma%1000) && is_finished) pthread_cond_wait(&cond, &mutex); /* condicao de bloqueio */
@@ -26,9 +27,10 @@ void* ExecutaTarefa (void* args) {
 }
 
 void* extra (void* args) {
-  long int temp = 1;
+  int final = max_iter*(long int)args;
+  long int temp = 0;
   printf("Extra : esta executando...\n");
-  for (int i=0; i<1000000; i++) {
+  while (soma != final) { /* condicao de loop foi mudada para ajudar EXTRA a nao terminar antes das outras threads*/
     pthread_mutex_lock(&mutex);
     if (!(soma % 1000)){
       
@@ -37,7 +39,7 @@ if(!(temp^soma)){pthread_cond_broadcast(&cond); pthread_mutex_unlock(&mutex); co
 temp = soma;
 /* apenas para evitar de imprimir multiplos iguais */
 
-      printf("soma = %ld \n", temp);
+      printf("logging : soma = %ld \n", temp);
 
       pthread_cond_broadcast(&cond); /* condicao foi atingida (soma foi impresso) */
 
@@ -45,10 +47,10 @@ temp = soma;
     pthread_mutex_unlock(&mutex);
   }
 
-/* apenas para garantir que o programa sempre termine de executar quando a thread EXTRA termina antes das outras */
+/* apenas para garantir que o programa sempre termine de executar caso thread EXTRA termina antes das outras */
 is_finished = 0;
 pthread_cond_broadcast(&cond);
-/* apenas para garantir que o programa sempre termine de executar quando a thread EXTRA termina antes das outras */
+/* apenas para garantir que o programa sempre termine de executar caso thread EXTRA termina antes das outras */
 
   printf("Extra : terminou!\n");
   pthread_exit(NULL);
@@ -56,7 +58,7 @@ pthread_cond_broadcast(&cond);
 
 int main(int argc, char *argv[]) {
   pthread_t *tid;
-  int nthreads;
+  long int nthreads;
 
   if(argc<2) {
     printf("Digite: %s <numero de threads>\n", argv[0]);
@@ -77,7 +79,7 @@ int main(int argc, char *argv[]) {
     }
   }
 
-  if (pthread_create(&tid[nthreads], NULL, extra, NULL)) {
+  if (pthread_create(&tid[nthreads], NULL, extra, (void*)nthreads)) {
     printf("--ERRO: pthread_create()\n"); exit(-1);
   }
 
