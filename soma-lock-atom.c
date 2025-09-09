@@ -32,7 +32,6 @@ void* extra (void* args) {
   long int temp = 1;
   printf("Extra : esta executando...\n");
   for (int i=0; i<1000000; i++) {
-
     pthread_mutex_lock(&mutex);
     if (!(soma % 1000)){
       
