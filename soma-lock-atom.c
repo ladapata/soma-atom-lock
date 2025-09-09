@@ -6,8 +6,8 @@
 
 long int soma = 0;
 pthread_mutex_t mutex;
-pthread_cond_t cond; /* variavel de cond para bloqueio condicional*/
 
+pthread_cond_t cond; /* variavel de cond para bloqueio condicional*/
 
 void* ExecutaTarefa (void* args) {
   long int id = (long int) args;
