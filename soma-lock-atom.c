@@ -30,7 +30,7 @@ void* extra (void* args) {
   int final = max_iter*(long int)args;
   long int temp = 0;
   printf("Extra : esta executando...\n");
-  while (soma != final) { /* condicao de loop foi mudada para ajudar EXTRA a nao terminar antes das outras threads*/
+  while (soma <= final) { /* condicao de loop foi mudada para ajudar EXTRA a nao terminar antes das outras threads*/
     pthread_mutex_lock(&mutex);
     if (!(soma % 1000)){
       
