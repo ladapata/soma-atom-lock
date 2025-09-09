@@ -18,7 +18,7 @@ void* ExecutaTarefa (void* args) {
 
     if(is_finished)
     {
-      if(!((soma%1000) && (soma^0))) pthread_cond_wait(&cond, &mutex); /* condicao de bloqueio */
+      if(!(soma%1000)) pthread_cond_wait(&cond, &mutex); /* condicao de bloqueio */
     }
 
     soma++;
