@@ -73,8 +73,7 @@ int main(int argc, char *argv[]) {
 
   pthread_mutex_init(&mutex, NULL);
 
-  /* inicializa cond para travar as threads sob uma condicao especifica*/
-  pthread_cond_init(&cond, NULL);
+  pthread_cond_init(&cond, NULL); /* inicializa cond para travar as threads sob uma condicao especifica*/
 
   for(long int t=0; t<nthreads; t++) {
     if (pthread_create(&tid[t], NULL, ExecutaTarefa, (void *)t)) {
